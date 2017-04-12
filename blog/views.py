@@ -59,3 +59,11 @@ def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('post_list')
+
+from django.contrib.auth import logout
+
+@login_required
+def logout(request):
+    logout(request)
+    return redirect(request, 'blog/post_list.html')
+    # Redirect to a success page.

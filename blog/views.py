@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm, UserForm
-from django.contrib.auth import logout
+from django.contrib.auth import logout as django_logout
 from django.shortcuts import redirect
 from django.utils import timezone
 from .models import Post
@@ -16,6 +16,7 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html',{'post': post})
+
 
 @login_required
 def post_new(request):
@@ -80,7 +81,7 @@ def post_remove(request, pk):
 
 #@login_required
 def logout(request):
-    logout(request)
+    django_logout(request)
     form = UserForm(request.POST or None)
     context = {
         "form": form,
